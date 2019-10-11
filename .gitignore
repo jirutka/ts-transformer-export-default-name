@@ -1,0 +1,8 @@
+/coverage/
+/dist/
+/lib/
+/.*cache/
+/.tmp/
+node_modules/
+/README.md
+*.log

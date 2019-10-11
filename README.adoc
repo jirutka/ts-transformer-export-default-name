@@ -1,0 +1,163 @@
+= ts-transformer-export-default-name
+:tf-name-camel: exportDefaultNameTransformer
+:npm-name: ts-transformer-export-default-name
+:gh-name: jirutka/{npm-name}
+:gh-branch: master
+:vs-marketplace-uri: https://marketplace.visualstudio.com/items?itemName=
+
+ifdef::env-github[]
+image:https://travis-ci.com/{gh-name}.svg?branch={gh-branch}[Build Status, link="https://travis-ci.com/{gh-name}"]
+image:https://img.shields.io/npm/v/{npm-name}.svg[npm Version, link="https://www.npmjs.org/package/{npm-name}"]
+endif::env-github[]
+
+This is a TypeScript AST transformer footnote:[If you’ve never heard about TypeScript transformers, I can recommend https://blog.logrocket.com/using-typescript-transforms-to-enrich-runtime-code-3fd2863221ed/[this blog post] to dive into the topic.] that … TODO
+
+
+
+== Usage
+
+Add {npm-name} package to your project as a **dev**elopment dependency and <<How to Configure the Transformer, configure the transformer>>.
+
+
+== How to Configure the Transformer
+
+Unfortunately, TypeScript itself does not currently provide any easy way to use custom transformers (see https://github.com/Microsoft/TypeScript/issues/14419[Microsoft/TypeScript#14419]).
+Fortunately, there are few solutions.
+
+
+=== TTypescript
+
+If you don’t use any bundler such as Rollup or webpack, https://github.com/cevek/ttypescript[TTypescript] is the way to go.
+It provides wrappers `ttsc` and `ttserver` for the `tsc` and `tsserver` commands that add support for custom transformers.
+All you have to do is to use these wrappers instead of the original commands and define the transformer in your `tsconfig.json`:
+
+.tsconfig.json:
+[source, jsonc, subs="+attributes"]
+----
+{
+  "compilerOptions": {
+    // ...
+    "plugins": [
+      { "transform": "{npm-name}" }
+    ]
+  },
+  // ...
+}
+----
+
+
+=== Rollup (with rollup-plugin-typescript2)
+
+.rollup.config.js:
+[source, js, subs="+attributes"]
+----
+import typescript from 'rollup-plugin-typescript2'
+import {tf-name-camel} from '{npm-name}'
+
+export default {
+  // ...
+  plugins: [
+    typescript({
+      transformers: [
+        (service) => ({
+          before: [ {tf-name-camel}(service.getProgram()) ],
+          after: [],
+        }),
+      ],
+    }),
+  ],
+}
+----
+
+
+=== Webpack (with ts-loader or awesome-typescript-loader)
+
+.webpack.config.js:
+[source, js, subs="+attributes"]
+----
+const {tf-name-camel} = require('{npm-name}').default
+
+module.exports = {
+  // ...
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader', // or 'awesome-typescript-loader',
+        options: {
+          getCustomTransformers: (program) => ({
+            before: [
+              {tf-name-camel}(program),
+            ],
+          }),
+        },
+      },
+    ],
+  },
+}
+----
+
+
+ifndef::npm-readme[]
+
+== Development
+
+=== System Requirements
+
+* https://nodejs.org[NodeJS] 10.13+
+* https://pandoc.org[Pandoc] and https://asciidoctor.org[Asciidoctor] (used only for converting README.adoc to Markdown for npmjs)
+
+
+=== Used Tools
+
+* https://www.typescriptlang.org[TypeScript] the language
+* https://yarnpkg.com[yarn] for dependencies management and building
+* https://eslint.org[ESLint] for linting JS/TypeScript code
+* https://github.com/substack/tape[tape] for testing
+* https://istanbul.js.org/[Istanbul] for tracking test coverage
+
+
+=== How to Start
+
+. Clone this repository:
+[source, subs="+attributes"]
+git clone https://github.com/{gh-name}.git
+cd {npm-name}
+
+. Install Yarn (if you don’t have it already):
+[source]
+npm install -g yarn
+
+. Install all JS dependencies:
+[source]
+yarn install
+
+. Build the project:
+[source]
+yarn build
+
+. Run tests and generate code coverage:
+[source]
+yarn test
+
+. Run linter:
+[source]
+yarn lint
+
+
+=== Visual Studio Code
+
+If you use Visual Studio Code, you may find the following extensions useful:
+
+* link:{vs-marketplace-uri}ryanluker.vscode-coverage-gutters[Coverage Gutters]
+* link:{vs-marketplace-uri}EditorConfig.EditorConfig[EditorConfig for VS Code]
+* link:{vs-marketplace-uri}dbaeumer.vscode-eslint[ESLint]
+* link:{vs-marketplace-uri}gamunu.vscode-yarn[yarn]
+
+endif::[]
+
+
+== License
+
+This project is licensed under http://opensource.org/licenses/MIT/[MIT License].
+For the full text of the license, see the link:LICENSE[LICENSE] file.

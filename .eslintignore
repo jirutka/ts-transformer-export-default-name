@@ -1,0 +1,6 @@
+/.*cache/
+/.tmp/
+/coverage/
+/dist/
+/lib/
+/nyc.config.js
