@@ -45,7 +45,7 @@ This will be transformed to:
 
 ._forty-two.js_:
 [source, ts]
-export default function fortyTwo () {
+export default function fortyTwo() {
   return 42;
 }
 
@@ -55,7 +55,7 @@ export default function fortyTwo () {
 ._forty-two.ts_:
 [source, ts]
 export default class {
-  get answer() { return 42 }
+  get answer () { return 42 }
 }
 
 This will be transformed to:
