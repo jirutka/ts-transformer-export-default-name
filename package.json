@@ -1,6 +1,6 @@
 {
   "name": "ts-transformer-export-default-name",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A TypeScript AST transformer that assigns a name to each arrow/anonymous function and class exported as default.",
   "author": "Jakub Jirutka <jakub@jirutka.cz>",
   "license": "MIT",
