@@ -11,14 +11,65 @@ image:https://img.shields.io/npm/v/{npm-name}.svg[npm Version, link="https://www
 endif::env-github[]
 
 This is a TypeScript AST transformer footnote:[If you’ve never heard about TypeScript transformers, I can recommend https://blog.logrocket.com/using-typescript-transforms-to-enrich-runtime-code-3fd2863221ed/[this blog post] to dive into the topic.] that assigns a name to each arrow/anonymous function and class exported as default (e.g. `export default () => 42`).
+The name is derived from the name of the source file or its directory, in the case of `index` file.
+
+This transformer does basically the same as https://github.com/gajus/babel-plugin-transform-export-default-name[babel-plugin-transform-export-default-name] but it’s implemented for the TypeScript compiler.
+See https://github.com/gajus/babel-plugin-transform-export-default-name/blob/v2.0.4/README.md[README] of the aforesaid Babel plugin for the explanation why is this useful.
 
 
-== Usage
+== Examples
 
-Add {npm-name} package to your project as a **dev**elopment dependency and <<How to Configure the Transformer, configure the transformer>>.
+=== Arrow Function
+
+._forty-two.ts_:
+[source, ts]
+export default () => 42
+
+This will be transformed to:
+
+._forty-two.js_:
+[source, ts]
+const fortyTwo = () => 42;
+export default fortyTwo;
 
 
-== How to Configure the Transformer
+=== Anonymous Function Declaration
+
+._forty-two.ts_:
+[source, ts]
+export default function () {
+  return 42
+}
+
+This will be transformed to:
+
+._forty-two.js_:
+[source, ts]
+export default function fortyTwo () {
+  return 42;
+}
+
+
+=== Anonymous Class Declaration
+
+._forty-two.ts_:
+[source, ts]
+export default class {
+  get answer() { return 42 }
+}
+
+This will be transformed to:
+
+._forty-two.js_:
+[source, ts]
+export default class FortyTwo {
+  get answer() { return 42; }
+}
+
+
+== How to Use
+
+Add {npm-name} package to your project as a **dev**elopment dependency and register it as a custom transformer.
 
 Unfortunately, TypeScript itself does not currently provide any easy way to use custom transformers (see https://github.com/Microsoft/TypeScript/issues/14419[Microsoft/TypeScript#14419]).
 Fortunately, there are few solutions.
