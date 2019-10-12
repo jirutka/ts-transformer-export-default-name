@@ -28,7 +28,7 @@ deploy:
   provider: npm
   email: jakub@jirutka.cz
   api_key:
-    secure: TODO
+    secure: "PmmCTwH7WKifXwvWGjVoFqrey5b4YZjAqhn27CcCdZXmmeBVtl6YsvFrIlX7mp7rs8x7WeQ7JB/n0L1f/yy0upUdXLBGtpER9Q2AwpKaopumXz1hBziD68JE0PYvDmqT4rmikDuJdrdPNfa7eRBGlOQj92CUHCM1TQ8LExcnymGUvIS+fspWhz56srJ/oRDNeOyoC5ReAvFLRFxaT541Rdu8O+0g99JcpTqfMQjfav1SQwsyprd7hCri+lWyo+ovOWSwUemEbgsWW+iECfIzPbWkmRkKNc255WFGUmrZacA9FoRM759ANld2UHnhddXqGMfsG9TLUHL1TPOk8UkH3Y44gAT2z5V/x7c+hvm+Bp+tePr5obdvXaFvAsU1Fvp2TM9kpiUTCwPZnKz+8Xqm1TPJslxbJSItAwIcBxR/9r8UDHW9Pn2/KjSMAFQX/nwTNz6er6po3/fUPvtdis+XN+aV2YQfyKoe031rfFr3ReCuL+29aoP3YJmU/zRW8rhgDamQ9rpmA9kXy2RmqhOernn7w6f1131hACrgqDWoH1p8BAFKgcDdCJOIVKplwZ0f1s9BhcnEHWWlg7LDNgWXM6tu223COlmon66rvwstY09TRGxljZ3ytdr1OeGsVsAsVslbay1xgLknbd58zhHyc1egn0Ff5yRhYKz4iCs86Qw="  # 3e3b......f535
   skip_cleanup: true
   on:
     tags: true
